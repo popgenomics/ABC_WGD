@@ -1,0 +1,12 @@
+nreps = 10000
+polyP = autoP
+model = tetra2
+n1 = 0
+n1 = 10
+n2 = 0
+n2 = 10
+na = 0
+na = 20
+tau = 0
+tau = 10
+
