@@ -1,10 +1,18 @@
 ABC_WGD 
 =================
+   * [Install](#install)
    * [Model](#model)
    * [Parameters](#parameters)
    * [Summary statistics](#summary-statistics)
    * [Usage](#usage)
 
+# Install  
+```
+chmod +x install.sh  
+  
+./install.py  
+```
+  
 # Model  
 **ABC_WGD** is made to investigate various models of speciation between a diploid and a tetraploid   
 Species 1 is considered as being diploid, species 2 is the tetraploid.  
