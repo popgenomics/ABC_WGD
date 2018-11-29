@@ -10,7 +10,7 @@ ABC_WGD
 ```
 chmod +x install.sh  
   
-./install.py  
+./install.sh  
 ```
   
 # Model  
