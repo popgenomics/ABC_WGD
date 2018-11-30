@@ -45,8 +45,6 @@ print(P_dice_given_observations) # posterior probabilities of all of the dices g
 # II) What about the second observation?
 ## How do these probas evolve according to the second observation?
 # 1) p(observations | dice, i)
-dices = c(4, 6, 8, 12, 20)
-
 P_observations_given_dice = NULL
 
 ### we apply the same loop over the dices to estimate the probability to observe observations[2] for each dice,i
@@ -74,12 +72,11 @@ for(i in 1:length(dices)){
 print(P_observation) # by randomly sampling one dice, and by throwing it, we have a probability equal to P_observation to observe observations[1]
 
 ## Posterior probabilities
-### let's compute the posterior probabilities P(dice,i | observations) for each dice given the first observation observations[1]
+### let's compute the posterior probabilities P(dice,i | observations) for each dice given the two observations
 P_dice_given_observations = ( P_observations_given_dice * P_dice ) / P_observation
 names(P_dice_given_observations) = dices
 
-print(P_dice_given_observations) # posterior probabilities of all of the dices given the first observation observation[1]
-
+print(P_dice_given_observations) # posterior probabilities of all of the dices given the two observations
 
 
 ### If we compute the same probabilities with a third observation (=5, for instance), we will adjust our apriori as and when clues are found. We will never be convinced that it is really an 8-sided die, but this die is becoming the most plausible.
