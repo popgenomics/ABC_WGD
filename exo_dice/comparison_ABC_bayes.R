@@ -86,7 +86,99 @@ abc = function(observations, nSimulations){
 }
 
 
+# ABC: plot the joint distribution for the dice example
+dice_sumStats_plot = function(nSampling, nSimulations){
+	# ABC: plot the joint distribution for the dice example
+	library(MASS)
+	obs4 = obs6 = obs8 = obs12 = obs20 = matrix(NA, ncol=2, nrow=nSimulations)
+	
+	for(i in 1:nSimulations){
+		tmp4 = sample(1:4, nSampling, replace=T)
+		tmp6 = sample(1:6, nSampling, replace=T)
+		tmp8 = sample(1:8, nSampling, replace=T)
+		tmp12 = sample(1:12, nSampling, replace=T)
+		tmp20 = sample(1:20, nSampling, replace=T)
 
+		obs4[i,] = c(mean(tmp4), sd(tmp4))
+		obs6[i,] = c(mean(tmp6), sd(tmp6))
+		obs8[i,] = c(mean(tmp8), sd(tmp8))
+		obs12[i,] = c(mean(tmp12), sd(tmp12))
+		obs20[i,] = c(mean(tmp20), sd(tmp20))
+	}
+
+	tmp4 = kde2d(obs4[,1], obs4[,2])
+	tmp6 = kde2d(obs6[,1], obs6[,2])
+	tmp8 = kde2d(obs8[,1], obs8[,2])
+	tmp12 = kde2d(obs12[,1], obs12[,2])
+	tmp20 = kde2d(obs20[,1], obs20[,2])
+
+	plot(range(obs4[,1], obs6[,1], obs8[,1], obs12[,1], obs20[,1]), range(obs4[,2], obs6[,2], obs8[,2], obs12[,2], obs20[,2]), col="white", xlab = "mean observation", ylab = "standard deviation")
+
+	contour(tmp20, add=T, col=rainbow(5)[5], lwd=2)
+	contour(tmp12, add=T, col=rainbow(5)[4], lwd=2)
+	contour(tmp8, add=T, col=rainbow(5)[3], lwd=2)
+	contour(tmp6, add=T, col=rainbow(5)[2], lwd=2)
+	contour(tmp4, add=T, col=rainbow(5)[1], lwd=2)
+}
+
+
+
+
+# plot the percentage of inferences among nReplicates for which we do not support the exact correct model
+plot_bayes_error = function(good_dice=8, nReplicates=1000){
+	# plot the percentage of inferences among nReplicates for which we do not support the exact correct model
+	## example:
+	# dev.new(width=13.4, height=4.2)
+	# par(mfrow=c(1,5), mar=c(4.5,3.5,3.5,1.5))
+	# plot_bayes_error(4, 1000)
+	# plot_bayes_error(6, 1000)
+	# plot_bayes_error(8, 1000)
+	# plot_bayes_error(12, 1000)
+	# plot_bayes_error(20, 1000)
+	dices = c(4,6,8,12,20)
+	
+	best_N_2 = best_N_5 = best_N_10 = best_N_100 = best_N_1000 = NULL
+	for(i in 1:nReplicates){
+		N=2
+		best_N_2 = c(best_N_2, as.vector(bayes(observations=sample(1:good_dice, N, replace=T), dices=dices)$best_model))
+		N=5
+		best_N_5 = c(best_N_5, as.vector(bayes(observations=sample(1:good_dice, N, replace=T), dices=dices)$best_model))
+		N=10
+		best_N_10 = c(best_N_10, as.vector(bayes(observations=sample(1:good_dice, N, replace=T), dices=dices)$best_model))
+		N=100
+		best_N_100 = c(best_N_100, as.vector(bayes(observations=sample(1:good_dice, N, replace=T), dices=dices)$best_model))
+		N=1000
+		best_N_1000 = c(best_N_1000, as.vector(bayes(observations=sample(1:good_dice, N, replace=T), dices=dices)$best_model))
+	}
+
+	error_N_2 = length(which(best_N_2 != paste('D', good_dice, sep=''))) / nReplicates 
+	error_N_5 = length(which(best_N_5 != paste('D', good_dice, sep=''))) / nReplicates 
+	error_N_10 = length(which(best_N_10 != paste('D', good_dice, sep=''))) / nReplicates 
+	error_N_100 = length(which(best_N_100 != paste('D', good_dice, sep=''))) / nReplicates 
+	error_N_1000 = length(which(best_N_1000 != paste('D', good_dice, sep=''))) / nReplicates 
+
+	barplot(c(error_N_2, error_N_5, error_N_10, error_N_100, error_N_1000), names = c('#obs=2', '#obs=5', '#obs=10', '#obs=100', '#obs=1000'), main = paste('good dice = ', good_dice,sep=''), ylim=c(0, 0.6), ylab='error rate', cex.lab=1.1)
+	abline(h=0.05, col="red", lty=2)
+	
+	summary = matrix(NA, ncol=5, nrow=5)
+	for(i in 1:5){ summary[1,i] = length(which(best_N_2 == paste('D', dices[i], sep=''))) }
+	for(i in 1:5){ summary[2,i] = length(which(best_N_5 == paste('D', dices[i], sep=''))) }
+	for(i in 1:5){ summary[3,i] = length(which(best_N_10 == paste('D', dices[i], sep=''))) }
+	for(i in 1:5){ summary[4,i] = length(which(best_N_100 == paste('D', dices[i], sep=''))) }
+	for(i in 1:5){ summary[5,i] = length(which(best_N_1000 == paste('D', dices[i], sep=''))) }
+	
+	colnames(summary) = paste('D', dices, sep="")
+	rownames(summary) = c('N2', 'N5', 'N10', 'N100', 'N1000')
+
+	cat('\n')
+	cat('Distribution of supported models\n')	
+	cat(paste('(made over ', nReplicates, ' replicates)\n', sep=''))
+	cat(paste('The correct dice is : ', good_dice, '\n', sep=''))
+	cat('\n')
+	print(summary)
+	cat('\n')
+	return(summary)
+}
 
 ### comparisons between the two methods
 #### let's assume a 8-sided dice with 2 rolls
@@ -131,3 +223,4 @@ abc = function(observations, nSimulations){
 # table(res_bayes$best_model)
 # table(res_abc$best_model)
 #
+
