@@ -222,5 +222,4 @@ plot_bayes_error = function(good_dice=8, nReplicates=1000){
 #
 # table(res_bayes$best_model)
 # table(res_abc$best_model)
-#
 
