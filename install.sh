@@ -8,7 +8,7 @@ if which msnsam >/dev/null; then
 	echo msnsam is ok
 else
 	echo msnsam has to be installed
-	gcc -O2 -o msnsam  msnsam.c  rand1.c streec.c -lm
+	gcc -O2 -o msnsam  msnsam.c  rand1.c streec.c -lm -w
 	sudo ln $PWD/msnsam /usr/bin/
 fi
 
