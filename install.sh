@@ -9,7 +9,7 @@ if which msnsam >/dev/null; then
 else
 	echo msnsam has to be installed
 	gcc -O2 -o msnsam  msnsam.c  rand1.c streec.c -lm -w
-	sudo ln $PWD/msnsam /usr/bin/
+	sudo ln -s $PWD/msnsam /usr/bin/
 fi
 
 for i in mscalc_wgd.py priorgenwgd run_ABC_polyploid.py; do
@@ -19,7 +19,7 @@ for i in mscalc_wgd.py priorgenwgd run_ABC_polyploid.py; do
 	else
 		echo ${i} not in the bin.
 		chmod +x ${i} 
-		sudo ln $PWD/${i} /usr/bin/
+		sudo ln -s $PWD/${i} /usr/bin/
 	fi
 done
 
