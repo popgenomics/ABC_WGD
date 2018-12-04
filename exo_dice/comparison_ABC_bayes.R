@@ -180,8 +180,8 @@ plot_bayes_error = function(good_dice=8, nReplicates=1000){
 	return(summary)
 }
 
-### comparisons between the two methods
-#### let's assume a 8-sided dice with 2 rolls
+## comparisons between the two methods
+### let's assume a 8-sided dice with 2 rolls
 #real_dice = 8
 #nObservations = 100
 #obs1 = sample(1:real_dice, nObservations, replace=T)
@@ -198,29 +198,29 @@ plot_bayes_error = function(good_dice=8, nReplicates=1000){
 #res_abc = abc(observations, nSimulations=5000)
 #
 #
-#### now, let's assume a 8-sided dice with 10 rolls
-#real_dice = 20
-#nObservations = 1000
-#nRolls = 10
-#
-#observations = NULL
-#for(i in 1:nRolls){
-#	observations = cbind(observations, sample(1:real_dice, nObservations, replace=T))
-#}
-#
-#observations = as.data.frame(observations)
-#colnames(observations) = paste(rep("obs", nRolls), 1:nRolls, sep="")
-#
-#
-#res_bayes = NULL # store the relative posterior probabilities of the 5 dice
-## loop over the observations: compute the relative posterior probabilities by using the Bayes formula
-#for(i in 1:nrow(observations)){
-#	res_bayes = rbind(res_bayes, bayes(observations[i,], dices=c(4,6,8,12,20)))
-#}
-#
-#res_abc = abc(observations, nSimulations=5000)
-#
-# table(res_bayes$best_model)
-# table(res_abc$best_model)
+### now, let's assume a 8-sided dice with 10 rolls
+real_dice = 20
+nObservations = 1000
+nRolls = 10
+
+observations = NULL
+for(i in 1:nRolls){
+	observations = cbind(observations, sample(1:real_dice, nObservations, replace=T))
+}
+
+observations = as.data.frame(observations)
+colnames(observations) = paste(rep("obs", nRolls), 1:nRolls, sep="")
+
+
+res_bayes = NULL # store the relative posterior probabilities of the 5 dice
+# loop over the observations: compute the relative posterior probabilities by using the Bayes formula
+for(i in 1:nrow(observations)){
+	res_bayes = rbind(res_bayes, bayes(observations[i,], dices=c(4,6,8,12,20)))
+}
+
+res_abc = abc(observations, nSimulations=5000)
+
+ table(res_bayes$best_model)
+ table(res_abc$best_model)
 
 

@@ -13,7 +13,7 @@ help += "\n\tcommand line: ./run_ABC_polyploid.py [model] [inheritance] [bpfile]
 
 if len(sys.argv) != 5:
 	print(help)
-	print("\n\tThe expected number of arguments is 3\n\n")
+	print("\n\tThe expected number of arguments is 4\n\n")
 	sys.exit()
 
 model = sys.argv[1]
@@ -62,10 +62,10 @@ infile.close()
 nsim = nreps * nLoci
 
 if model == "auto":
-	command = "priorgen_wgd_geneflow_v2.py bpfile={0} n1=0 n1=1 n2=1 n2=2 nA=2 nA=3 tau=0 tau=4 alpha={4} alpha={5} nreps={1} M=0 M=10 shape1=0 shape1=10 shape2=0 shape2=100 model={2} migModel=migAB symModel=asym MVariation=hetero parameters=output_{2}.txt | msnsam tbs {3} -t tbs -r tbs tbs -I 3 tbs tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -m 1 3 tbs -m 3 1 tbs -m 2 3 tbs -m 3 2 tbs -n 1 tbs -n 2 tbs -n 3 tbs -g 2 tbs -g 3 tbs -ej tbs 3 2 -en tbs 2 tbs -ej tbs 2 1 -eN tbs tbs".format(bpfile, nreps, model, nsim, alpha1, alpha2)
+	command = "priorgen_wgd_geneflow_v2.py bpfile={0} n1=0 n1=1 n2=1 n2=2 nA=2 nA=3 tau=0 tau=4 alpha={4} alpha={5} nreps={1} M=0 M=10 shape1=0 shape1=10 shape2=0 shape2=100 model={2} migModel=migAB symModel=asym MVariation=hetero parameters=output_{2}.txt | msnsam tbs {3} -t tbs -r tbs tbs -I 3 tbs tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -m 1 3 tbs -m 3 1 tbs -m 2 3 tbs -m 3 2 tbs -n 1 tbs -n 2 tbs -n 3 tbs -g 2 tbs -g 3 tbs -ej tbs 3 2 -en tbs 2 tbs -ej tbs 2 1 -eN tbs tbs | mscalc_wgd.py".format(bpfile, nreps, model, nsim, alpha1, alpha2)
 
 if model == "allo":
-	command = "priorgen_wgd_geneflow_v2.py bpfile={0} n1=0 n1=1 n2=1 n2=2 nA=2 nA=3 tau=0 tau=4 alpha={4} alpha={5} nreps={1} M=0 M=10 shape1=0 shape1=10 shape2=0 shape2=100 model={2} migModel=migAB symModel=asym MVariation=hetero parameters=output_{2}.txt | msnsam tbs {3} -t tbs -r tbs tbs -I 3 tbs tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -m 1 3 tbs -m 3 1 tbs -m 2 3 tbs -m 3 2 tbs -n 1 tbs -n 2 tbs -n 3 tbs -g 2 tbs -g 3 tbs -ej tbs 3 1 -en tbs 2 tbs -em tbs 1 2 0 -em tbs 2 1 0 -ej tbs 2 1 -eN tbs tbs".format(bpfile, nreps, model, nsim, alpha1, alpha2)
+	command = "priorgen_wgd_geneflow_v2.py bpfile={0} n1=0 n1=1 n2=1 n2=2 nA=2 nA=3 tau=0 tau=4 alpha={4} alpha={5} nreps={1} M=0 M=10 shape1=0 shape1=10 shape2=0 shape2=100 model={2} migModel=migAB symModel=asym MVariation=hetero parameters=output_{2}.txt | msnsam tbs {3} -t tbs -r tbs tbs -I 3 tbs tbs tbs 0 -m 1 2 tbs -m 2 1 tbs -m 1 3 tbs -m 3 1 tbs -m 2 3 tbs -m 3 2 tbs -n 1 tbs -n 2 tbs -n 3 tbs -g 2 tbs -g 3 tbs -ej tbs 3 1 -en tbs 2 tbs -em tbs 1 2 0 -em tbs 2 1 0 -ej tbs 2 1 -eN tbs tbs | mscalc_wgd.py".format(bpfile, nreps, model, nsim, alpha1, alpha2)
 
 try:
 	os.system(command)

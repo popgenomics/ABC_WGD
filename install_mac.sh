@@ -12,7 +12,7 @@ else
 	sudo ln -s $PWD/msnsam /usr/local/bin/
 fi
 
-for i in mscalc_wgd.py priorgenwgd run_ABC_polyploid.py; do
+for i in mscalc_wgd.py priorgenwgd priorgen_wgd_geneflow_v2.py run_ABC_polyploid.py run_ABC_polyploid_v2.py; do
 	echo check ${i}
 	if which ${i}>/dev/null; then
 		echo ${i} is ok

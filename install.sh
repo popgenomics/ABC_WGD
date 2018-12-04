@@ -14,7 +14,7 @@ else
 	sudo ln -s $PWD/msnsam /usr/local/bin/
 fi
 
-for i in mscalc_wgd.py priorgenwgd run_ABC_polyploid.py; do
+for i in mscalc_wgd.py priorgenwgd priorgen_wgd_geneflow_v2.py run_ABC_polyploid.py run_ABC_polyploid_v2.py; do
 	echo check ${i}
 	if which ${i}>/dev/null; then
 		echo ${i} is ok
@@ -30,8 +30,8 @@ if which pypy >/dev/null; then
 	echo pypy is ok
 else
 	echo installation of pypy
-	wget https://bitbucket.org/pypy/pypy/downloads/pypy2-v6.0.0-linux32.tar.bz2
-	tar -xvjf pypy2-v6.0.0-linux32.tar.bz2
-	sudo ln -s $PWD/pypy2-v6.0.0-linux32/bin/pypy /usr/local/bin/
+	wget https://bitbucket.org/pypy/pypy/downloads/pypy2-v6.0.0-linux64.tar.bz2
+	tar -xvjf pypy2-v6.0.0-linux64.tar.bz2
+	sudo ln -s $PWD/pypy2-v6.0.0-linux64/bin/pypy /usr/local/bin/
 fi
 
