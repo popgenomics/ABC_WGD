@@ -3,6 +3,8 @@ echo check the R library abcrf
 #wget https://cran.r-project.org/src/contrib/abcrf_1.7.1.tar.gz
 #sudo R CMD INSTALL abcrf_1.7.1.tar.gz
 
+rep=$PWD
+
 echo check msnsam
 if which msnsam >/dev/null; then
 	echo msnsam is ok
@@ -29,8 +31,7 @@ if which pypy >/dev/null; then
 else
 	echo installation of pypy
 	wget https://bitbucket.org/pypy/pypy/downloads/pypy2-v6.0.0-linux32.tar.bz2
-	pypy2-v6.0.0-linux32.tar.bz2
-	cd pypy2-v6.0.0-linux32/bin
-	sudo ln -s $PWD/pypy /usr/local/bin
+	tar -xvjf pypy2-v6.0.0-linux32.tar.bz2
+	sudo ln -s $PWD/pypy2-v6.0.0-linux32/bin/pypy /usr/local/bin/
 fi
 
