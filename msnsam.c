@@ -449,6 +449,7 @@ getpars(int argc, char *argv[], int *phowmany )
   else{
 	/* next two lines added by JRI Aug. 2007.  Sets pop size to new tbs popsize */
 	pars.cp.nsam = atoi( argv[1] ); 	
+	pars.cp.config = (int *) malloc( (unsigned)(( pars.cp.npop +1 ) *sizeof( int)) ); // added by P. Meirmans 2018
 	(pars.cp.config)[0] = pars.cp.nsam ; 
 	npop = pars.cp.npop ;
 	free_eventlist( pars.cp.deventlist, npop );
