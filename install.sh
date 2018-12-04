@@ -8,11 +8,8 @@ if which msnsam >/dev/null; then
 	echo msnsam is ok
 else
 	echo msnsam has to be installed
-	git clone https://github.com/rossibarra/msnsam
-	cd msnsam
-	./clms
-	sudo ln $PWD/${i}/msnsam /usr/bin/
-	cd ..
+	gcc -O2 -o msnsam  msnsam.c  rand1.c streec.c -lm
+	sudo ln $PWD/msnsam /usr/bin/
 fi
 
 for i in mscalc_wgd.py priorgenwgd run_ABC_polyploid.py; do
