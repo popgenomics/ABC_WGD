@@ -1,13 +1,18 @@
 #!/bin/bash
 echo check the R library abcrf
-wget https://cran.r-project.org/src/contrib/abcrf_1.7.1.tar.gz
-sudo R CMD INSTALL abcrf_1.7.1.tar.gz
+#wget https://cran.r-project.org/src/contrib/abcrf_1.7.1.tar.gz
+#sudo R CMD INSTALL abcrf_1.7.1.tar.gz
 
 echo check msnsam
 if which msnsam >/dev/null; then
 	echo msnsam is ok
 else
 	echo msnsam has to be installed
+	git clone https://github.com/rossibarra/msnsam
+	cd msnsam
+	./clms
+	sudo ln $PWD/${i}/msnsam /usr/bin/
+	cd ..
 fi
 
 for i in mscalc_wgd.py priorgenwgd run_ABC_polyploid.py; do
