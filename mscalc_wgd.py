@@ -1,4 +1,4 @@
-#!/usr/bin/pypy
+#!/usr/local/bin/pypy
 
 # #!/gepv/home2/croux/bin/pypy
 
