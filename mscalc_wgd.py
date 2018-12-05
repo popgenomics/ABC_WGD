@@ -511,7 +511,6 @@ for line in sys.stdin: # read the ms's output from the stdin
 			for i_spB in range(nBins_spB):
 				vector_sfs.append(sfs[i_spA][i_spB])
 		vector_sfs = '\t'.join( [ str(fifj) for fifj in vector_sfs ]) + '\n'
-		print(vector_sfs.strip())
 		outfile_jsfs.write(vector_sfs)
 		
 infile.close()
