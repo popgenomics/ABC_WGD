@@ -258,7 +258,16 @@ for i in range(nBins_spA):
 
 
 # ms' output file
+outfile_jsfs = open("ABCjsfs.txt", "w")
+header = ''
+for i in range(nBins_spA):
+	for j in range(nBins_spB):
+		header += 'fA{0}_fB{1}\t'.format(i, j)
+header = header.strip() + '\n'
+outfile_jsfs.write(header)
+
 outfile = open("ABCstat.txt", "w")
+
 res = "dataset\tbialsites_avg\tbialsites_std\t"
 res += "sf_avg\tsf_std\t"
 res += "sxA_avg\tsxA_std\t"
@@ -300,6 +309,11 @@ for line in sys.stdin: # read the ms's output from the stdin
 	line = line.strip()
 	if "segsites" in line:
 		if nLoci_cnt == 0:
+			# vector to recort the sfs
+			sfs = []
+			for i in range(nBins_spA):
+				sfs.append([0]*nBins_spB)
+			# end of the vector recording the sfs
 			ss_sf, noSs_sf, ss_noSf, noSs_noSf = 0, 0, 0, 0
 			bialsites = []
 			sf = []
@@ -491,27 +505,19 @@ for line in sys.stdin: # read the ms's output from the stdin
 		res += "{0:.5f}\t{1:.5f}\t{2:.5f}\t{3:.5f}".format(ss_sf/(1.0*nLoci), ss_noSf/(1.0*nLoci), noSs_sf/(1.0*nLoci), noSs_noSf/(1.0*nLoci)) # proportion of ss_sf, ss_noSf, etc ... loci
 		res += "\n"
 		outfile.write(res)
+
+		vector_sfs = []
+		for i_spA in range(nBins_spA):
+			for i_spB in range(nBins_spB):
+				vector_sfs.append(sfs[i_spA][i_spB])
+		vector_sfs = '\t'.join( [ str(fifj) for fifj in vector_sfs ]) + '\n'
+		print(vector_sfs.strip())
+		outfile_jsfs.write(vector_sfs)
+		
 infile.close()
+outfile_jsfs.close()
 outfile.close()
 
-
-# print the jSFS
-outfile = open('sfs.txt', 'w')
-outfile.write('# lower left bin = 0,0. upper-left bin = 0 in spA, 100% in spB\n')
-## transpose the matrix
-tmp = ''
-for j in range(len(sfs)): # loop from f(spA)=0 to f(spA)=1:
-	tmp += '\tspA_n{0}'.format(j)
-tmp = tmp + '\n'
-outfile.write(tmp)
-	
-for i in range(len(sfs[0])-1, -1, -1): # loop from f(spB)=1 to f(spB)=0:
-	tmp = 'spB_n{0}\t'.format(i)
-	for j in range(len(sfs)): # loop from f(spA)=0 to f(spA)=1:
-		tmp += '\t{0}'.format(sfs[j][i])
-	tmp += '\n'
-	outfile.write(tmp)
-outfile.close()
 
 
 
