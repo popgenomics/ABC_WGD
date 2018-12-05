@@ -181,26 +181,6 @@ plot_bayes_error = function(good_dice=8, nReplicates=1000){
 }
 
 ## comparisons between the two methods
-### let's assume a 8-sided dice with 2 rolls
-#real_dice = 8
-#nObservations = 100
-#obs1 = sample(1:real_dice, nObservations, replace=T)
-#obs2 = sample(1:real_dice, nObservations, replace=T)
-#
-#observations= data.frame(obs1,obs2) # data frame gathering all of the 100 observations
-#
-#res_bayes = NULL # store the relative posterior probabilities of the 5 dice
-## loop over the observations: compute the relative posterior probabilities by using the Bayes formula
-#for(i in 1:nrow(observations)){
-#	res_bayes = rbind(res_bayes, bayes(observations[i,], dices=c(4,6,8,12,20)))
-#}
-#
-#res_abc = abc(observations, nSimulations=5000)
-#
-#
-### now, let's assume a 8-sided dice with 10 rolls
-
-
 #real_dice = 20
 #nObservations = 1000
 #nRolls = 10
@@ -226,3 +206,56 @@ plot_bayes_error = function(good_dice=8, nReplicates=1000){
 # table(res_abc$best_model)
 #
 #
+
+
+### build the reference table
+#N = 10
+#
+#nSimulations = 10000
+#
+#simulations_die_4 = as.data.frame(matrix(NA, ncol=N, nrow=nSimulations))
+#simulations_die_6 = as.data.frame(matrix(NA, ncol=N, nrow=nSimulations))
+#simulations_die_8 = as.data.frame(matrix(NA, ncol=N, nrow=nSimulations))
+#simulations_die_12 = as.data.frame(matrix(NA, ncol=N, nrow=nSimulations))
+#simulations_die_20 = as.data.frame(matrix(NA, ncol=N, nrow=nSimulations))
+#
+#for(i in 1:nSimulations){
+#	simulations_die_4[i,] = sample(1:4, N, replace=T)
+#	simulations_die_6[i,] = sample(1:6, N, replace=T)
+#	simulations_die_8[i,] = sample(1:8, N, replace=T)
+#	simulations_die_12[i,] = sample(1:12, N, replace=T)
+#	simulations_die_20[i,] = sample(1:20, N, replace=T)
+#}
+#
+#colnames(simulations_die_4) = paste( rep('obs', N), 1:N, sep='')
+#colnames(simulations_die_6) = paste( rep('obs', N), 1:N, sep='')
+#colnames(simulations_die_8) = paste( rep('obs', N), 1:N, sep='')
+#colnames(simulations_die_12) = paste( rep('obs', N), 1:N, sep='')
+#colnames(simulations_die_20) = paste( rep('obs', N), 1:N, sep='')
+#
+#
+#all_simulations = rbind(simulations_die_4, simulations_die_6, simulations_die_8, simulations_die_12, simulations_die_20) 
+#
+#modIndexes = rep(c('D4', 'D6', 'D8', 'D12', 'D20'), each = nSimulations)
+#
+#mod = abcrf(modIndexes~., data = data.frame(modIndexes, all_simulations), ntree = 1000, paral = T, ncores = 3)
+
+
+#nSimulations = 10000
+
+#simulations_die_8 = as.data.frame(matrix(NA, ncol=N, nrow=nSimulations))
+
+
+
+#observations = matrix(sample(1:8, N, replace=T), nrow=1, ncol=N)
+#observations = as.data.frame(observations)
+#names(observations) = paste( rep('obs', N), 1:N, sep='')
+
+
+
+#predicted_dice = predict(mod, observations, training=data.frame(modIndexes, all_simulations),
+#ntree = 1000, paral = T, ncores=2)
+
+
+
+
